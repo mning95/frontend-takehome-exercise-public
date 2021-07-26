@@ -22,9 +22,13 @@ const clickCell = ({target}) => {
   target.innerHTML = currPlayer;
   gameState[cellIndex] = currPlayer;
 
-  // Check game status
+  // Check for a win
   for (const combo of winningCombos) {
-    if (gameState[combo[0]] !== "" && gameState[combo[0]] === gameState[combo[1]] && gameState[combo[1]] === gameState[combo[2]]) {
+    const first = combo[0];
+    const second = combo[1];
+    const third = combo[2];
+
+    if (gameState[first] !== "" && gameState[first] === gameState[second] && gameState[second] === gameState[third]) {
       window.alert(`${currPlayer} has won the game!`)
       return;
     }

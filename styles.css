@@ -1,0 +1,20 @@
+.row {
+    display: flex;
+    height: 100px;
+    width: 300px;
+    border: 1px solid black;
+    border-top: none;
+}
+
+.row:first-child {
+    border-top: 1px solid black;
+}
+
+.cell {
+    width: 100px;
+    border-right: 1px solid black;
+}
+
+.cell:last-child {
+    border-right: none;
+}

@@ -22,16 +22,21 @@ const clickCell = ({target}) => {
   target.innerHTML = currPlayer;
   gameState[cellIndex] = currPlayer;
 
-  // Check for a win
+  // Win if a winning combo is occupied by same symbol that's not ""
   for (const combo of winningCombos) {
     const first = combo[0];
     const second = combo[1];
     const third = combo[2];
 
     if (gameState[first] !== "" && gameState[first] === gameState[second] && gameState[second] === gameState[third]) {
-      window.alert(`${currPlayer} has won the game!`)
+      window.alert(`The winner is ${currPlayer}`);
       return;
     }
+  }
+
+  // Draw if no winning combos and all cells are occupied
+  if (!gameState.includes("")) {
+    window.alert('Tie Game');
   }
 };
 

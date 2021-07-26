@@ -12,6 +12,14 @@ const winningCombos = [
   [2, 4, 6], 
 ];
 
+// Reset UI, game state, and player. Hide 'play again' button
+const replay = () => {
+  document.querySelectorAll('.cell').forEach(c => c.innerHTML = "");
+  gameState = ["", "", "", "", "", "", "", "", ""];
+  currPlayer = "X";
+  document.querySelector('.replay').style.visibility = "hidden";
+}
+
 const clickCell = ({target}) => {
   const cellIndex = parseInt(target.getAttribute('data-index'));
 
@@ -30,6 +38,9 @@ const clickCell = ({target}) => {
 
     if (gameState[first] !== "" && gameState[first] === gameState[second] && gameState[second] === gameState[third]) {
       window.alert(`The winner is ${currPlayer}`);
+      // Display 'play again' button
+      document.querySelector('.replay').style.visibility="visible";
+      
       return;
     }
   }
@@ -37,9 +48,10 @@ const clickCell = ({target}) => {
   // Draw if no winning combos and all cells are occupied
   if (!gameState.includes("")) {
     window.alert('Tie Game');
+    // Display 'play again' button
+    document.querySelector('.replay').style.visibility="visible";
   }
 };
 
-
-
 document.querySelectorAll('.cell').forEach(c => c.addEventListener('click', clickCell));
+document.querySelector('.replay').addEventListener('click', replay);

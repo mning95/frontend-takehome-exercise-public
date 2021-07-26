@@ -19,3 +19,7 @@
 .cell:last-child {
     border-right: none;
 }
+
+.replay {
+    visibility: hidden;
+}

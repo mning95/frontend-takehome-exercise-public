@@ -51,6 +51,9 @@ const clickCell = ({target}) => {
     // Display 'play again' button
     document.querySelector('.replay').style.visibility="visible";
   }
+
+  // Switch players
+  currPlayer = currPlayer === "X" ? "O" : "X";
 };
 
 document.querySelectorAll('.cell').forEach(c => c.addEventListener('click', clickCell));

@@ -17,37 +17,6 @@ const winningCombos = [
   [2, 4, 6], 
 ];
 
-const enablePreview = ({target}) => {
-  target.innerHTML = currPlayer;
-  target.style.backgroundColor = '#26A69A';
-};
-
-const disablePreview = ({target}) => {
-  target.innerHTML = '';
-  target.style.backgroundColor= 'fff';
-}
-
-const replay = () => {
-  // Switch cursor style to pointer
-  document.querySelectorAll('.cell').forEach(c => c.style.cursor = "pointer");
-  
-  // Reset game state and player. Update UI
-  gameState = ["", "", "", "", "", "", "", "", ""];
-  currPlayer = "X";
-  document.querySelectorAll('.cell').forEach(c => c.innerHTML = "");
-  document.querySelector('.status').innerHTML = `${currPlayer}'s Turn`
-  
-  // Hide 'play again' button
-  document.querySelector('.replay').style.visibility = "hidden";
-
-  // Re-enable event listeners
-  document.querySelectorAll('.cell').forEach(c => {
-    c.addEventListener('mouseenter', enablePreview);
-    c.addEventListener('mouseleave', disablePreview);
-    c.addEventListener('click', placeMove);
-  });
-};
-
 const endGame = (result) => {  
   // 1) Update counts
   gameCount++;
@@ -121,13 +90,44 @@ const placeMove = ({target}) => {
   // Check if game has reached a conclusion
   checkGameStatus();
 
-  // Switch players and update status
+  // Switch players and update status UI
   currPlayer = currPlayer === "X" ? "O" : "X";
   document.querySelector('.status').innerHTML = `${currPlayer}'s Turn`
 
   // Remove mouse hover event listeners to prevent overriding updates to cell made by click event
   target.removeEventListener('mouseenter', enablePreview);
   target.removeEventListener('mouseleave', disablePreview);
+};
+
+const enablePreview = ({target}) => {
+  target.innerHTML = currPlayer;
+  target.style.backgroundColor = '#26A69A';
+};
+
+const disablePreview = ({target}) => {
+  target.innerHTML = '';
+  target.style.backgroundColor= 'fff';
+}
+
+const replay = () => {
+  // Switch cursor style to pointer
+  document.querySelectorAll('.cell').forEach(c => c.style.cursor = "pointer");
+  
+  // Reset game state and player. Update UI
+  gameState = ["", "", "", "", "", "", "", "", ""];
+  currPlayer = "X";
+  document.querySelectorAll('.cell').forEach(c => c.innerHTML = "");
+  document.querySelector('.status').innerHTML = `${currPlayer}'s Turn`
+  
+  // Hide 'play again' button
+  document.querySelector('.replay').style.visibility = "hidden";
+
+  // Re-enable event listeners
+  document.querySelectorAll('.cell').forEach(c => {
+    c.addEventListener('mouseenter', enablePreview);
+    c.addEventListener('mouseleave', disablePreview);
+    c.addEventListener('click', placeMove);
+  });
 };
 
 // Add event listeners

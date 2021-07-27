@@ -6,43 +6,53 @@
   </head>
 
   <body>
-    <h2 class="status">X's Turn</h2>
+    <div class="root">
+      <div class="container">
 
-    <h2 class="score">Scoreboard</h2>
-      <ul>
-        <li>
-          <span>X: </span>
-          <span class="win-count-x">0 (0.00%)</span>
-        </li>
-        <li>
-          <span>O: </span>
-          <span class="win-count-o">0 (0.00%)</span>
-        </li>
-        <li>
-          <span>Ties: </span>
-          <span class="tie-count">0 (0.00%)</span>
-        </li>
-    </ul>
+        <div class="status-container">
+          <h2 class="status">X's Turn</h2>
+        </div>
 
-    <div id="board">
-      <div id="row-1" class="row">
-        <div data-index="0" class="cell"> </div>
-        <div data-index="1" class="cell"> </div>
-        <div data-index="2" class="cell"> </div>
-      </div>
-      <div id="row-2" class="row">
-        <div data-index="3" class="cell"> </div>
-        <div data-index="4" class="cell"> </div>
-        <div data-index="5" class="cell"> </div>
-      </div>
-      <div id="row-3" class="row">
-        <div data-index="6" class="cell"> </div>
-        <div data-index="7" class="cell"> </div>
-        <div data-index="8" class="cell"> </div>
+        <div class="score-container">
+          <h2 class="score">Scoreboard</h2>
+            <span class="count">
+              <span>X: </span>
+              <span class="win-count-x">0 (0.00%)</span>
+            </span>
+            <span class="count">
+              <span>Ties: </span>
+              <span class="tie-count">0 (0.00%)</span>
+            </span>
+            <span class="count">
+              <span>O: </span>
+              <span class="win-count-o">0 (0.00%)</span>
+            </span>
+        </div>
+
+        <div id="board">
+          <div id="row-1" class="row">
+            <div data-index="0" class="cell"> </div>
+            <div data-index="1" class="cell"> </div>
+            <div data-index="2" class="cell"> </div>
+          </div>
+          <div id="row-2" class="row">
+            <div data-index="3" class="cell"> </div>
+            <div data-index="4" class="cell"> </div>
+            <div data-index="5" class="cell"> </div>
+          </div>
+          <div id="row-3" class="row">
+            <div data-index="6" class="cell"> </div>
+            <div data-index="7" class="cell"> </div>
+            <div data-index="8" class="cell"> </div>
+          </div>
+        </div>
+
+        <div class="play-again-container">
+          <button class="play-again">Play Again</button>
+        </div>
+        
       </div>
     </div>
-
-    <button class="play-again">Play Again</button>
 
     <script src="main.js"></script>
   </body>

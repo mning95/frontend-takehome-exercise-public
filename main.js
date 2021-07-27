@@ -87,16 +87,7 @@ const endGame = (result) => {
   });
 };
 
-const placeMove = ({target}) => {
-  // Do nothing if user clicks occupied cell
-  const cellIndex = parseInt(target.getAttribute('data-index'));
-  if (gameState[cellIndex] !== "") return;
-
-  // Update game state and UI
-  gameState[cellIndex] = currPlayer;
-  target.innerHTML = currPlayer;
-  target.style.backgroundColor = '#fff';
-
+const checkGameStatus = () => {
   // Check for winning combos
   for (const combo of winningCombos) {
     const first = combo[0];
@@ -115,12 +106,26 @@ const placeMove = ({target}) => {
     endGame("tie");
     return;
   }
+}
+
+const placeMove = ({target}) => {
+  // Do nothing if user clicks occupied cell
+  const cellIndex = parseInt(target.getAttribute('data-index'));
+  if (gameState[cellIndex] !== "") return;
+
+  // Update game state and UI
+  gameState[cellIndex] = currPlayer;
+  target.innerHTML = currPlayer;
+  target.style.backgroundColor = '#fff';
+
+  // Check if game has reached a conclusion
+  checkGameStatus();
 
   // Switch players and update status
   currPlayer = currPlayer === "X" ? "O" : "X";
   document.querySelector('.status').innerHTML = `${currPlayer}'s Turn`
 
-  // Remove mouse hover event listeners
+  // Remove mouse hover event listeners to prevent overriding updates to cell made by click event
   target.removeEventListener('mouseenter', enablePreview);
   target.removeEventListener('mouseleave', disablePreview);
 };

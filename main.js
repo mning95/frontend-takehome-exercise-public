@@ -39,12 +39,18 @@ const endGame = (result) => {
     // Update win count
     if (currPlayer === 'X') {
       xWinCount++;
-    } else {
+    } else if (currPlayer === 'O') {
       oWinCount++;
+    } else {
+      // We shouldn't reach here
+      console.error('Invalid player');
     }
-  } else {
+  } else if (result === 'tie') {
     // Update tie count
     tieCount++;
+  } else {
+    // We shouldn't reach here
+    console.error('Invalid result');
   }
 
   // 2) Update UI
@@ -81,7 +87,7 @@ const checkGameStatus = () => {
 
     // Win if winning combo cells are occupied by same symbol that's not ''
     if (gameState[first] !== '' && gameState[first] === gameState[second] && gameState[second] === gameState[third]) {
-      endGame('win')
+      endGame('win');
       return true;
     }
   }
@@ -118,7 +124,7 @@ const placeMove = ({target}) => {
 
   // Switch players and update status UI
   currPlayer = currPlayer === 'X' ? 'O' : 'X';
-  document.querySelector('.status').innerHTML = `${currPlayer}'s Turn`
+  document.querySelector('.status').innerHTML = `${currPlayer}'s Turn`;
 
   // Remove mouse hover event listeners to prevent overriding updates to cell made by click event
   target.removeEventListener('mouseenter', enablePreview);
@@ -154,7 +160,7 @@ const playAgain = () => {
   gameState = ['', '', '', '', '', '', '', '', ''];
   currPlayer = 'X';
   document.querySelectorAll('.cell').forEach(c => c.innerHTML = '');
-  document.querySelector('.status').innerHTML = `${currPlayer}'s Turn`
+  document.querySelector('.status').innerHTML = `${currPlayer}'s Turn`;
   // Switch cursor style to pointer
   document.querySelectorAll('.cell').forEach(c => c.style.cursor = 'pointer');
   // Hide 'play again' button

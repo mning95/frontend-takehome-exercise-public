@@ -18,6 +18,16 @@ const winningCombos = [
   [2, 4, 6], 
 ];
 
+const enablePreview = ({target}) => {
+  target.innerHTML = currPlayer;
+  target.style.backgroundColor = '#26A69A';
+};
+
+const clearPreview = ({target}) => {
+  target.innerHTML = '';
+  target.style.backgroundColor= 'fff';
+}
+
 const replay = () => {
   // Allow clicking cells
   gameOver = false;
@@ -107,5 +117,9 @@ const clickCell = ({target}) => {
   document.querySelector('.status').innerHTML = `${currPlayer}'s Turn`
 };
 
-document.querySelectorAll('.cell').forEach(c => c.addEventListener('click', clickCell));
+document.querySelectorAll('.cell').forEach(c => {
+  c.addEventListener('mouseenter', enablePreview)
+  c.addEventListener('mouseout', clearPreview)
+  c.addEventListener('click', clickCell);
+});
 document.querySelector('.replay').addEventListener('click', replay);

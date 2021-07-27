@@ -5,6 +5,8 @@ let oWinCount = 0;
 let tieCount = 0;
 let gameCount = 0;
 
+const PREVIEW_COLOR = '#ff9933';
+const CLICK_COLOR = '#fff';
 const WINNING_COMBOS = [
   [0, 1, 2], 
   [3, 4, 5], 
@@ -116,7 +118,7 @@ const placeMove = ({target}) => {
   // Update game state and UI
   gameState[cellIndex] = currPlayer;
   target.innerHTML = currPlayer;
-  target.style.backgroundColor = '#fff';
+  target.style.backgroundColor = CLICK_COLOR;
 
   // Check if game has reached a conclusion
   const gameOver = checkGameStatus();
@@ -139,7 +141,7 @@ const placeMove = ({target}) => {
  */
 const enablePreview = ({target}) => {
   target.innerHTML = currPlayer;
-  target.style.backgroundColor = '#26A69A';
+  target.style.backgroundColor = PREVIEW_COLOR;
 };
 
 /**

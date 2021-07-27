@@ -5,6 +5,8 @@ let winCountX = 0;
 let winCountO = 0;
 let tieCount = 0;
 let gameCount = 0;
+let gameOver = false;
+
 const winningCombos = [
   [0, 1, 2], 
   [3, 4, 5], 
@@ -16,16 +18,25 @@ const winningCombos = [
   [2, 4, 6], 
 ];
 
-// Reset UI, game state, and player. Hide 'play again' button
 const replay = () => {
+  // Allow clicking cells
+  gameOver = false;
+  document.querySelectorAll('.cell').forEach(c => c.style.cursor = "pointer");
+  
+  // Reset UI, game state, and player
   document.querySelector('.status').innerHTML = "";
   document.querySelectorAll('.cell').forEach(c => c.innerHTML = "");
   gameState = ["", "", "", "", "", "", "", "", ""];
   currPlayer = "X";
+
+  // Hide 'play again' button
   document.querySelector('.replay').style.visibility = "hidden";
 };
 
 const clickCell = ({target}) => {
+  // Do nothing if game is over
+  if (gameOver) return;
+
   const cellIndex = parseInt(target.getAttribute('data-index'));
 
   // Do nothing if user clicks occupied cell
@@ -42,10 +53,14 @@ const clickCell = ({target}) => {
 
     // Win if winning combo cells are occupied by same symbol that's not ""
     if (gameState[first] !== "" && gameState[first] === gameState[second] && gameState[second] === gameState[third]) {
+      // Prevent user from clicking cells after game over
+      gameOver = true;
+      document.querySelectorAll('.cell').forEach(c => c.style.cursor = "default");
+
       // Update status
       document.querySelector('.status').innerHTML = `The winner is ${currPlayer}`;
 
-      // Update game count and scores
+      // Update game scores
       gameCount++;
       if (currPlayer === "X") {
         winCountX++;
@@ -58,7 +73,7 @@ const clickCell = ({target}) => {
       document.querySelector('.tie-count').innerHTML = `${tieCount} (${((tieCount / gameCount) * 100).toFixed(2)}%)`;
 
       // Display 'play again' button
-      document.querySelector('.replay').style.visibility="visible";
+      document.querySelector('.replay').style.visibility = "visible";
       
       return;
     }
@@ -66,10 +81,14 @@ const clickCell = ({target}) => {
 
   // Tie if no winning combos and all cells are occupied
   if (!gameState.includes("")) {
+    // Prevent user from clicking cells after game over
+    gameOver = true;
+    document.querySelectorAll('.cell').forEach(c => c.style.cursor = "default");
+
     // Update status
     document.querySelector('.status').innerHTML = 'Tie Game';
 
-    // Update game count and scores
+    // Update scores
     gameCount++;
     tieCount++;
     document.querySelector('.win-count-x').innerHTML = `${winCountX} (${((winCountX / gameCount) * 100).toFixed(2)}%)`;
@@ -77,7 +96,7 @@ const clickCell = ({target}) => {
     document.querySelector('.tie-count').innerHTML = `${tieCount} (${((tieCount / gameCount) * 100).toFixed(2)}%)`;
 
     // Display 'play again' button
-    document.querySelector('.replay').style.visibility="visible";
+    document.querySelector('.replay').style.visibility = "visible";
 
     return;
   }

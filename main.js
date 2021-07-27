@@ -5,7 +5,7 @@ let oWinCount = 0;
 let tieCount = 0;
 let gameCount = 0;
 
-const winningCombos = [
+const WINNING_COMBOS = [
   [0, 1, 2], 
   [3, 4, 5], 
   [6, 7, 8], 
@@ -60,7 +60,7 @@ const endGame = (result) => {
 
 const checkGameStatus = () => {
   // Check for winning combos
-  for (const combo of winningCombos) {
+  for (const combo of WINNING_COMBOS) {
     const first = combo[0];
     const second = combo[1];
     const third = combo[2];

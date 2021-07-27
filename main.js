@@ -23,11 +23,12 @@ const replay = () => {
   gameOver = false;
   document.querySelectorAll('.cell').forEach(c => c.style.cursor = "pointer");
   
-  // Reset UI, game state, and player
-  document.querySelector('.status').innerHTML = "";
-  document.querySelectorAll('.cell').forEach(c => c.innerHTML = "");
+  // Reset game state and player. Update UI
   gameState = ["", "", "", "", "", "", "", "", ""];
   currPlayer = "X";
+  document.querySelectorAll('.cell').forEach(c => c.innerHTML = "");
+  document.querySelector('.status').innerHTML = `${currPlayer}'s Turn`
+  
 
   // Hide 'play again' button
   document.querySelector('.replay').style.visibility = "hidden";
@@ -103,6 +104,7 @@ const clickCell = ({target}) => {
 
   // Switch players
   currPlayer = currPlayer === "X" ? "O" : "X";
+  document.querySelector('.status').innerHTML = `${currPlayer}'s Turn`
 };
 
 document.querySelectorAll('.cell').forEach(c => c.addEventListener('click', clickCell));

@@ -7,7 +7,23 @@
 
   <body>
     <h2 class="status"></h2>
-    <h2 class="score"></h2>
+
+    <h2 class="score">Score</h2>
+      <ul>
+        <li>
+          <span>Games won by player X: </span>
+          <span class="win-count-x">0</span>
+        </li>
+        <li>
+          <span>Games won by player O: </span>
+          <span class="win-count-o">0</span>
+        </li>
+        <li>
+          <span>Games tied: </span>
+          <span class="tie-count">0</span>
+        </li>
+    </ul>
+
     <div id="board">
       <div id="row-1" class="row">
         <div data-index="0" class="cell"> </div>
@@ -25,6 +41,7 @@
         <div data-index="8" class="cell"> </div>
       </div>
     </div>
+
     <button class="replay">Play Again</button>
 
     <script src="main.js"></script>

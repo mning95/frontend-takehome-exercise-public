@@ -46,7 +46,7 @@ const endGame = (result) => {
   // Switch cursor style to default
   document.querySelectorAll('.cell').forEach(c => c.style.cursor = "default");
   // Display 'play again' button
-  document.querySelector('.replay').style.visibility = "visible";
+  document.querySelector('.play-again').style.visibility = "visible";
 
   // 3) Remove event listeners
   document.querySelectorAll('.cell').forEach(c => {
@@ -112,7 +112,7 @@ const disablePreview = ({target}) => {
   target.style.backgroundColor= 'fff';
 }
 
-const replay = () => {
+const playAgain = () => {
   // Reset game state and player. Update UI
   gameState = ["", "", "", "", "", "", "", "", ""];
   currPlayer = "X";
@@ -121,7 +121,7 @@ const replay = () => {
   // Switch cursor style to pointer
   document.querySelectorAll('.cell').forEach(c => c.style.cursor = "pointer");
   // Hide 'play again' button
-  document.querySelector('.replay').style.visibility = "hidden";
+  document.querySelector('.play-again').style.visibility = "hidden";
 
   // Re-enable event listeners
   document.querySelectorAll('.cell').forEach(c => {
@@ -137,4 +137,4 @@ document.querySelectorAll('.cell').forEach(c => {
   c.addEventListener('mouseenter', enablePreview);
   c.addEventListener('mouseleave', disablePreview);
 });
-document.querySelector('.replay').addEventListener('click', replay);
+document.querySelector('.play-again').addEventListener('click', playAgain);

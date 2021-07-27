@@ -1,4 +1,3 @@
-// Game states
 let gameState = ["", "", "", "", "", "", "", "", ""];
 let currPlayer = "X";
 let xWinCount = 0;
@@ -20,6 +19,7 @@ const winningCombos = [
 const endGame = (result) => {  
   // 1) Update counts
   gameCount++;
+  
   if (result === "win") {
     // Update win count
     if (currPlayer === "X") {
@@ -113,30 +113,28 @@ const disablePreview = ({target}) => {
 }
 
 const replay = () => {
-  // Switch cursor style to pointer
-  document.querySelectorAll('.cell').forEach(c => c.style.cursor = "pointer");
-  
   // Reset game state and player. Update UI
   gameState = ["", "", "", "", "", "", "", "", ""];
   currPlayer = "X";
   document.querySelectorAll('.cell').forEach(c => c.innerHTML = "");
   document.querySelector('.status').innerHTML = `${currPlayer}'s Turn`
-  
+  // Switch cursor style to pointer
+  document.querySelectorAll('.cell').forEach(c => c.style.cursor = "pointer");
   // Hide 'play again' button
   document.querySelector('.replay').style.visibility = "hidden";
 
   // Re-enable event listeners
   document.querySelectorAll('.cell').forEach(c => {
+    c.addEventListener('click', placeMove);
     c.addEventListener('mouseenter', enablePreview);
     c.addEventListener('mouseleave', disablePreview);
-    c.addEventListener('click', placeMove);
   });
 };
 
 // Add event listeners
 document.querySelectorAll('.cell').forEach(c => {
+  c.addEventListener('click', placeMove);
   c.addEventListener('mouseenter', enablePreview);
   c.addEventListener('mouseleave', disablePreview);
-  c.addEventListener('click', placeMove);
 });
 document.querySelector('.replay').addEventListener('click', replay);

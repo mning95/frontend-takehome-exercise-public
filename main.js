@@ -5,7 +5,6 @@ let winCountX = 0;
 let winCountO = 0;
 let tieCount = 0;
 let gameCount = 0;
-let gameOver = false;
 
 const winningCombos = [
   [0, 1, 2], 
@@ -29,8 +28,7 @@ const disablePreview = ({target}) => {
 }
 
 const replay = () => {
-  // Allow clicking cells
-  gameOver = false;
+  // Switch cursor style to pointer
   document.querySelectorAll('.cell').forEach(c => c.style.cursor = "pointer");
   
   // Reset game state and player. Update UI
@@ -50,12 +48,9 @@ const replay = () => {
 };
 
 const clickCell = ({target}) => {
-  // Remove mouse event listeners
+  // Remove mouse hover event listeners
   target.removeEventListener('mouseenter', enablePreview);
   target.removeEventListener('mouseleave', disablePreview);
-
-  // Do nothing if game is over
-  if (gameOver) return;
 
   const cellIndex = parseInt(target.getAttribute('data-index'));
 
@@ -74,8 +69,7 @@ const clickCell = ({target}) => {
 
     // Win if winning combo cells are occupied by same symbol that's not ""
     if (gameState[first] !== "" && gameState[first] === gameState[second] && gameState[second] === gameState[third]) {
-      // Prevent user from clicking cells after game over
-      gameOver = true;
+      // Switch cursor style to default
       document.querySelectorAll('.cell').forEach(c => c.style.cursor = "default");
 
       // Update status
@@ -97,10 +91,11 @@ const clickCell = ({target}) => {
       document.querySelector('.replay').style.visibility = "visible";
       
 
-      // Disable mouse event listeners
+      // Remove event listeners
       document.querySelectorAll('.cell').forEach(c => {
         c.removeEventListener('mouseenter', enablePreview);
         c.removeEventListener('mouseleave', disablePreview);
+        c.removeEventListener('click', clickCell);
       });
 
       return;
@@ -109,8 +104,7 @@ const clickCell = ({target}) => {
 
   // Tie if no winning combos and all cells are occupied
   if (!gameState.includes("")) {
-    // Prevent user from clicking cells after game over
-    gameOver = true;
+    // Switch cursor style to default
     document.querySelectorAll('.cell').forEach(c => c.style.cursor = "default");
 
     // Update status
@@ -126,10 +120,11 @@ const clickCell = ({target}) => {
     // Display 'play again' button
     document.querySelector('.replay').style.visibility = "visible";
 
-    // Disable mouse event listeners
+    // Remove event listeners
     document.querySelectorAll('.cell').forEach(c => {
       c.removeEventListener('mouseenter', enablePreview);
       c.removeEventListener('mouseleave', disablePreview);
+      c.removeEventListener('click', clickCell);
     });
 
     return;

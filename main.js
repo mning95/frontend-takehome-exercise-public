@@ -48,10 +48,6 @@ const replay = () => {
 };
 
 const clickCell = ({target}) => {
-  // Remove mouse hover event listeners
-  target.removeEventListener('mouseenter', enablePreview);
-  target.removeEventListener('mouseleave', disablePreview);
-
   const cellIndex = parseInt(target.getAttribute('data-index'));
 
   // Do nothing if user clicks occupied cell
@@ -133,6 +129,10 @@ const clickCell = ({target}) => {
   // Switch players
   currPlayer = currPlayer === "X" ? "O" : "X";
   document.querySelector('.status').innerHTML = `${currPlayer}'s Turn`
+
+  // Remove mouse hover event listeners
+  target.removeEventListener('mouseenter', enablePreview);
+  target.removeEventListener('mouseleave', disablePreview);
 };
 
 document.querySelectorAll('.cell').forEach(c => {

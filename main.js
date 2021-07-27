@@ -23,7 +23,7 @@ const enablePreview = ({target}) => {
   target.style.backgroundColor = '#26A69A';
 };
 
-const clearPreview = ({target}) => {
+const disablePreview = ({target}) => {
   target.innerHTML = '';
   target.style.backgroundColor= 'fff';
 }
@@ -39,12 +39,15 @@ const replay = () => {
   document.querySelectorAll('.cell').forEach(c => c.innerHTML = "");
   document.querySelector('.status').innerHTML = `${currPlayer}'s Turn`
   
-
   // Hide 'play again' button
   document.querySelector('.replay').style.visibility = "hidden";
 };
 
 const clickCell = ({target}) => {
+  // Remove onmouse listeners
+  target.removeEventListener('mouseenter', enablePreview);
+  target.removeEventListener('mouseleave', disablePreview);
+
   // Do nothing if game is over
   if (gameOver) return;
 
@@ -56,6 +59,7 @@ const clickCell = ({target}) => {
   // Update UI and game state
   target.innerHTML = currPlayer;
   gameState[cellIndex] = currPlayer;
+  target.style.backgroundColor = '#fff';
 
   for (const combo of winningCombos) {
     const first = combo[0];
@@ -118,8 +122,8 @@ const clickCell = ({target}) => {
 };
 
 document.querySelectorAll('.cell').forEach(c => {
-  c.addEventListener('mouseenter', enablePreview)
-  c.addEventListener('mouseout', clearPreview)
+  c.addEventListener('mouseenter', enablePreview);
+  c.addEventListener('mouseleave', disablePreview);
   c.addEventListener('click', clickCell);
 });
 document.querySelector('.replay').addEventListener('click', replay);

@@ -53,9 +53,9 @@ const clickCell = ({target}) => {
         winCountO++;
       }
 
-      document.querySelector('.win-count-x').innerHTML = `${winCountX} (${(winCountX / gameCount) * 100}%)`;
-      document.querySelector('.win-count-o').innerHTML = `${winCountO} (${(winCountO / gameCount) * 100}%)`;
-      document.querySelector('.tie-count').innerHTML = `${tieCount} (${(tieCount / gameCount) * 100}%)`;
+      document.querySelector('.win-count-x').innerHTML = `${winCountX} (${((winCountX / gameCount) * 100).toFixed(2)}%)`;
+      document.querySelector('.win-count-o').innerHTML = `${winCountO} (${((winCountO / gameCount) * 100).toFixed(2)}%)`;
+      document.querySelector('.tie-count').innerHTML = `${tieCount} (${((tieCount / gameCount) * 100).toFixed(2)}%)`;
 
       // Display 'play again' button
       document.querySelector('.replay').style.visibility="visible";
@@ -72,9 +72,9 @@ const clickCell = ({target}) => {
     // Update game count and scores
     gameCount++;
     tieCount++;
-    document.querySelector('.win-count-x').innerHTML = `${winCountX} (${(winCountX / gameCount) * 100}%)`;
-    document.querySelector('.win-count-o').innerHTML = `${winCountO} (${(winCountO / gameCount) * 100}%)`;
-    document.querySelector('.tie-count').innerHTML = `${tieCount} (${(tieCount / gameCount) * 100}%)`;
+    document.querySelector('.win-count-x').innerHTML = `${winCountX} (${((winCountX / gameCount) * 100).toFixed(2)}%)`;
+    document.querySelector('.win-count-o').innerHTML = `${winCountO} (${((winCountO / gameCount) * 100).toFixed(2)}%)`;
+    document.querySelector('.tie-count').innerHTML = `${tieCount} (${((tieCount / gameCount) * 100).toFixed(2)}%)`;
 
     // Display 'play again' button
     document.querySelector('.replay').style.visibility="visible";

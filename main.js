@@ -66,15 +66,17 @@ const checkGameStatus = () => {
     // Win if winning combo cells are occupied by same symbol that's not ""
     if (gameState[first] !== "" && gameState[first] === gameState[second] && gameState[second] === gameState[third]) {
       endGame("win")
-      return;
+      return true;
     }
   }
 
   // Tie if there are no winning combos and all cells are occupied
   if (!gameState.includes("")) {
     endGame("tie");
-    return;
+    return true;
   }
+
+  return false;
 }
 
 const placeMove = ({target}) => {
@@ -88,7 +90,8 @@ const placeMove = ({target}) => {
   target.style.backgroundColor = '#fff';
 
   // Check if game has reached a conclusion
-  checkGameStatus();
+  const gameOver = checkGameStatus();
+  if (gameOver) return;
 
   // Switch players and update status UI
   currPlayer = currPlayer === "X" ? "O" : "X";

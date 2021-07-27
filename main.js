@@ -48,17 +48,56 @@ const replay = () => {
   });
 };
 
-const placeMove = ({target}) => {
-  const cellIndex = parseInt(target.getAttribute('data-index'));
+const endGame = (result) => {  
+  // 1) Update counts
+  gameCount++;
+  if (result === "win") {
+    // Update win count
+    if (currPlayer === "X") {
+      xWinCount++;
+    } else {
+      oWinCount++;
+    }
 
+    // Update status
+    document.querySelector('.status').innerHTML = `The winner is ${currPlayer}`;
+  } else {
+    // Update tie count
+    tieCount++;
+
+    // Update status
+    document.querySelector('.status').innerHTML = 'Tie Game';
+  }
+
+  // 2) Update UI
+  // Update scoreboard
+  document.querySelector('.win-count-x').innerHTML = `${xWinCount} (${((xWinCount / gameCount) * 100).toFixed(2)}%)`;
+  document.querySelector('.win-count-o').innerHTML = `${oWinCount} (${((oWinCount / gameCount) * 100).toFixed(2)}%)`;
+  document.querySelector('.tie-count').innerHTML = `${tieCount} (${((tieCount / gameCount) * 100).toFixed(2)}%)`;
+  // Switch cursor style to default
+  document.querySelectorAll('.cell').forEach(c => c.style.cursor = "default");
+  // Display 'play again' button
+  document.querySelector('.replay').style.visibility = "visible";
+
+  // 3) Remove event listeners
+  document.querySelectorAll('.cell').forEach(c => {
+    c.removeEventListener('mouseenter', enablePreview);
+    c.removeEventListener('mouseleave', disablePreview);
+    c.removeEventListener('click', placeMove);
+  });
+};
+
+const placeMove = ({target}) => {
   // Do nothing if user clicks occupied cell
+  const cellIndex = parseInt(target.getAttribute('data-index'));
   if (gameState[cellIndex] !== "") return;
 
-  // Update UI and game state
-  target.innerHTML = currPlayer;
+  // Update game state and UI
   gameState[cellIndex] = currPlayer;
+  target.innerHTML = currPlayer;
   target.style.backgroundColor = '#fff';
 
+  // Check for winning combos
   for (const combo of winningCombos) {
     const first = combo[0];
     const second = combo[1];
@@ -66,68 +105,18 @@ const placeMove = ({target}) => {
 
     // Win if winning combo cells are occupied by same symbol that's not ""
     if (gameState[first] !== "" && gameState[first] === gameState[second] && gameState[second] === gameState[third]) {
-      // Switch cursor style to default
-      document.querySelectorAll('.cell').forEach(c => c.style.cursor = "default");
-
-      // Update status
-      document.querySelector('.status').innerHTML = `The winner is ${currPlayer}`;
-
-      // Update game scores
-      gameCount++;
-      if (currPlayer === "X") {
-        xWinCount++;
-      } else {
-        oWinCount++;
-      }
-
-      document.querySelector('.win-count-x').innerHTML = `${xWinCount} (${((xWinCount / gameCount) * 100).toFixed(2)}%)`;
-      document.querySelector('.win-count-o').innerHTML = `${oWinCount} (${((oWinCount / gameCount) * 100).toFixed(2)}%)`;
-      document.querySelector('.tie-count').innerHTML = `${tieCount} (${((tieCount / gameCount) * 100).toFixed(2)}%)`;
-
-      // Display 'play again' button
-      document.querySelector('.replay').style.visibility = "visible";
-      
-
-      // Remove event listeners
-      document.querySelectorAll('.cell').forEach(c => {
-        c.removeEventListener('mouseenter', enablePreview);
-        c.removeEventListener('mouseleave', disablePreview);
-        c.removeEventListener('click', placeMove);
-      });
-
+      endGame("win")
       return;
     }
   }
 
-  // Tie if no winning combos and all cells are occupied
+  // Tie if there are no winning combos and all cells are occupied
   if (!gameState.includes("")) {
-    // Switch cursor style to default
-    document.querySelectorAll('.cell').forEach(c => c.style.cursor = "default");
-
-    // Update status
-    document.querySelector('.status').innerHTML = 'Tie Game';
-
-    // Update scores
-    gameCount++;
-    tieCount++;
-    document.querySelector('.win-count-x').innerHTML = `${xWinCount} (${((xWinCount / gameCount) * 100).toFixed(2)}%)`;
-    document.querySelector('.win-count-o').innerHTML = `${oWinCount} (${((oWinCount / gameCount) * 100).toFixed(2)}%)`;
-    document.querySelector('.tie-count').innerHTML = `${tieCount} (${((tieCount / gameCount) * 100).toFixed(2)}%)`;
-
-    // Display 'play again' button
-    document.querySelector('.replay').style.visibility = "visible";
-
-    // Remove event listeners
-    document.querySelectorAll('.cell').forEach(c => {
-      c.removeEventListener('mouseenter', enablePreview);
-      c.removeEventListener('mouseleave', disablePreview);
-      c.removeEventListener('click', placeMove);
-    });
-
+    endGame("tie");
     return;
   }
 
-  // Switch players
+  // Switch players and update status
   currPlayer = currPlayer === "X" ? "O" : "X";
   document.querySelector('.status').innerHTML = `${currPlayer}'s Turn`
 
@@ -136,6 +125,7 @@ const placeMove = ({target}) => {
   target.removeEventListener('mouseleave', disablePreview);
 };
 
+// Add event listeners
 document.querySelectorAll('.cell').forEach(c => {
   c.addEventListener('mouseenter', enablePreview);
   c.addEventListener('mouseleave', disablePreview);

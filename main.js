@@ -44,6 +44,7 @@ const replay = () => {
   document.querySelectorAll('.cell').forEach(c => {
     c.addEventListener('mouseenter', enablePreview);
     c.addEventListener('mouseleave', disablePreview);
+    c.addEventListener('click', clickCell);
   });
 };
 

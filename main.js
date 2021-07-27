@@ -1,8 +1,8 @@
 // Game states
 let gameState = ["", "", "", "", "", "", "", "", ""];
 let currPlayer = "X";
-let winCountX = 0;
-let winCountO = 0;
+let xWinCount = 0;
+let oWinCount = 0;
 let tieCount = 0;
 let gameCount = 0;
 
@@ -44,11 +44,11 @@ const replay = () => {
   document.querySelectorAll('.cell').forEach(c => {
     c.addEventListener('mouseenter', enablePreview);
     c.addEventListener('mouseleave', disablePreview);
-    c.addEventListener('click', clickCell);
+    c.addEventListener('click', placeMove);
   });
 };
 
-const clickCell = ({target}) => {
+const placeMove = ({target}) => {
   const cellIndex = parseInt(target.getAttribute('data-index'));
 
   // Do nothing if user clicks occupied cell
@@ -75,13 +75,13 @@ const clickCell = ({target}) => {
       // Update game scores
       gameCount++;
       if (currPlayer === "X") {
-        winCountX++;
+        xWinCount++;
       } else {
-        winCountO++;
+        oWinCount++;
       }
 
-      document.querySelector('.win-count-x').innerHTML = `${winCountX} (${((winCountX / gameCount) * 100).toFixed(2)}%)`;
-      document.querySelector('.win-count-o').innerHTML = `${winCountO} (${((winCountO / gameCount) * 100).toFixed(2)}%)`;
+      document.querySelector('.win-count-x').innerHTML = `${xWinCount} (${((xWinCount / gameCount) * 100).toFixed(2)}%)`;
+      document.querySelector('.win-count-o').innerHTML = `${oWinCount} (${((oWinCount / gameCount) * 100).toFixed(2)}%)`;
       document.querySelector('.tie-count').innerHTML = `${tieCount} (${((tieCount / gameCount) * 100).toFixed(2)}%)`;
 
       // Display 'play again' button
@@ -92,7 +92,7 @@ const clickCell = ({target}) => {
       document.querySelectorAll('.cell').forEach(c => {
         c.removeEventListener('mouseenter', enablePreview);
         c.removeEventListener('mouseleave', disablePreview);
-        c.removeEventListener('click', clickCell);
+        c.removeEventListener('click', placeMove);
       });
 
       return;
@@ -110,8 +110,8 @@ const clickCell = ({target}) => {
     // Update scores
     gameCount++;
     tieCount++;
-    document.querySelector('.win-count-x').innerHTML = `${winCountX} (${((winCountX / gameCount) * 100).toFixed(2)}%)`;
-    document.querySelector('.win-count-o').innerHTML = `${winCountO} (${((winCountO / gameCount) * 100).toFixed(2)}%)`;
+    document.querySelector('.win-count-x').innerHTML = `${xWinCount} (${((xWinCount / gameCount) * 100).toFixed(2)}%)`;
+    document.querySelector('.win-count-o').innerHTML = `${oWinCount} (${((oWinCount / gameCount) * 100).toFixed(2)}%)`;
     document.querySelector('.tie-count').innerHTML = `${tieCount} (${((tieCount / gameCount) * 100).toFixed(2)}%)`;
 
     // Display 'play again' button
@@ -121,7 +121,7 @@ const clickCell = ({target}) => {
     document.querySelectorAll('.cell').forEach(c => {
       c.removeEventListener('mouseenter', enablePreview);
       c.removeEventListener('mouseleave', disablePreview);
-      c.removeEventListener('click', clickCell);
+      c.removeEventListener('click', placeMove);
     });
 
     return;
@@ -139,6 +139,6 @@ const clickCell = ({target}) => {
 document.querySelectorAll('.cell').forEach(c => {
   c.addEventListener('mouseenter', enablePreview);
   c.addEventListener('mouseleave', disablePreview);
-  c.addEventListener('click', clickCell);
+  c.addEventListener('click', placeMove);
 });
 document.querySelector('.replay').addEventListener('click', replay);

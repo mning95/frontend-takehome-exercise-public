@@ -42,18 +42,14 @@ const endGame = (result) => {
     } else {
       oWinCount++;
     }
-
-    // Update status
-    document.querySelector('.status').innerHTML = `The winner is ${currPlayer}`;
   } else {
     // Update tie count
     tieCount++;
-
-    // Update status
-    document.querySelector('.status').innerHTML = 'Tie Game';
   }
 
   // 2) Update UI
+  // Update status
+  document.querySelector('.status').innerHTML = result === "win" ? `The winner is ${currPlayer}` : 'Tie Game';
   // Update scoreboard
   document.querySelector('.win-count-x').innerHTML = `${xWinCount} (${calculatePercent(xWinCount, gameCount, 2)}%)`;
   document.querySelector('.win-count-o').innerHTML = `${oWinCount} (${calculatePercent(oWinCount, gameCount, 2)}%)`;

@@ -119,6 +119,7 @@ const placeMove = ({target}) => {
   gameState[cellIndex] = currPlayer;
   target.innerHTML = currPlayer;
   target.style.backgroundColor = CLICK_COLOR;
+  target.style.cursor = 'default';
 
   // Check if game has reached a conclusion
   const gameOver = checkGameStatus();

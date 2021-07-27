@@ -16,8 +16,21 @@ const WINNING_COMBOS = [
   [2, 4, 6], 
 ];
 
+/**
+ * Helper function to convert a fraction to a percent
+ * 
+ * @param {number} num: numerator 
+ * @param {number} denom: denominator
+ * @param {number} digits: number of digits to appear after the decimal point
+ * @returns a string representing a number using fixed-point notation
+ */
 const calculatePercent = (num, denom, digits) => ((num / denom) * 100).toFixed(digits);
 
+/**
+ * Helper function that updates counts, UI, and removes event listeners after game has ended
+ * 
+ * @param {string} result: "win" or "tie" result
+ */
 const endGame = (result) => {  
   // 1) Update counts
   gameCount++;
@@ -58,6 +71,11 @@ const endGame = (result) => {
   });
 };
 
+/**
+ * Helper function that checks whether the game has ended
+ * 
+ * @returns true if game has ended in a win or tie and false otherwise
+ */
 const checkGameStatus = () => {
   // Check for winning combos
   for (const combo of WINNING_COMBOS) {
@@ -81,6 +99,13 @@ const checkGameStatus = () => {
   return false;
 }
 
+/**
+ * Function that gets called after placing a move. Updates game state,
+ * checks whether game has ended, switches players after a turn, and updates UI
+ * 
+ * @param {object} event: javascript event object. The destructured target property 
+ * represents the clicked cell
+ */
 const placeMove = ({target}) => {
   // Do nothing if user clicks occupied cell
   const cellIndex = parseInt(target.getAttribute('data-index'));
@@ -104,16 +129,30 @@ const placeMove = ({target}) => {
   target.removeEventListener('mouseleave', disablePreview);
 };
 
+/**
+ * Function that updates the cell UI on mouse enter
+ * 
+ * @param {object} event: javascript event object. The destructured target property
+ * represents the hovered cell
+ */
 const enablePreview = ({target}) => {
   target.innerHTML = currPlayer;
   target.style.backgroundColor = '#26A69A';
 };
 
+/**
+ * Function that updates the cell UI on mouse leave
+ * 
+ * @param {object} event: javascript event object. The destructured target property
+ * represents the hovered cell
+ */
 const disablePreview = ({target}) => {
   target.innerHTML = '';
   target.style.backgroundColor= 'fff';
 }
 
+// Function that gets called after a game restart. Resets game state, user, 
+// updates UI, and removes listeners.
 const playAgain = () => {
   // Reset game state and player. Update UI
   gameState = ["", "", "", "", "", "", "", "", ""];

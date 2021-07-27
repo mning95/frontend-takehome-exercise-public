@@ -55,7 +55,7 @@ const endGame = (result) => {
 
   // 2) Update UI
   // Update status
-  document.querySelector('.status').innerHTML = result === 'win' ? `The winner is ${currPlayer}` : 'Tie Game';
+  document.querySelector('.status').innerHTML = result === 'win' ? `The Winner is ${currPlayer}` : 'Tie Game';
   // Update scoreboard
   document.querySelector('.win-count-x').innerHTML = `${xWinCount} (${calculatePercent(xWinCount, gameCount, 2)}%)`;
   document.querySelector('.win-count-o').innerHTML = `${oWinCount} (${calculatePercent(oWinCount, gameCount, 2)}%)`;

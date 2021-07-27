@@ -16,6 +16,8 @@ const winningCombos = [
   [2, 4, 6], 
 ];
 
+const calculatePercent = (num, denom, digits) => ((num / denom) * 100).toFixed(digits);
+
 const endGame = (result) => {  
   // 1) Update counts
   gameCount++;
@@ -40,9 +42,9 @@ const endGame = (result) => {
 
   // 2) Update UI
   // Update scoreboard
-  document.querySelector('.win-count-x').innerHTML = `${xWinCount} (${((xWinCount / gameCount) * 100).toFixed(2)}%)`;
-  document.querySelector('.win-count-o').innerHTML = `${oWinCount} (${((oWinCount / gameCount) * 100).toFixed(2)}%)`;
-  document.querySelector('.tie-count').innerHTML = `${tieCount} (${((tieCount / gameCount) * 100).toFixed(2)}%)`;
+  document.querySelector('.win-count-x').innerHTML = `${xWinCount} (${calculatePercent(xWinCount, gameCount, 2)}%)`;
+  document.querySelector('.win-count-o').innerHTML = `${oWinCount} (${calculatePercent(oWinCount, gameCount, 2)}%)`;
+  document.querySelector('.tie-count').innerHTML = `${tieCount} (${calculatePercent(tieCount, gameCount, 2)}%)`;
   // Switch cursor style to default
   document.querySelectorAll('.cell').forEach(c => c.style.cursor = "default");
   // Display 'play again' button

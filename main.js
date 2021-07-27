@@ -41,10 +41,16 @@ const replay = () => {
   
   // Hide 'play again' button
   document.querySelector('.replay').style.visibility = "hidden";
+
+  // Re-enable event listeners
+  document.querySelectorAll('.cell').forEach(c => {
+    c.addEventListener('mouseenter', enablePreview);
+    c.addEventListener('mouseleave', disablePreview);
+  });
 };
 
 const clickCell = ({target}) => {
-  // Remove onmouse listeners
+  // Remove mouse event listeners
   target.removeEventListener('mouseenter', enablePreview);
   target.removeEventListener('mouseleave', disablePreview);
 
@@ -90,6 +96,13 @@ const clickCell = ({target}) => {
       // Display 'play again' button
       document.querySelector('.replay').style.visibility = "visible";
       
+
+      // Disable mouse event listeners
+      document.querySelectorAll('.cell').forEach(c => {
+        c.removeEventListener('mouseenter', enablePreview);
+        c.removeEventListener('mouseleave', disablePreview);
+      });
+
       return;
     }
   }
@@ -112,6 +125,12 @@ const clickCell = ({target}) => {
 
     // Display 'play again' button
     document.querySelector('.replay').style.visibility = "visible";
+
+    // Disable mouse event listeners
+    document.querySelectorAll('.cell').forEach(c => {
+      c.removeEventListener('mouseenter', enablePreview);
+      c.removeEventListener('mouseleave', disablePreview);
+    });
 
     return;
   }

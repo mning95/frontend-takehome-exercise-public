@@ -2,19 +2,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
     margin: auto;
     top: 0; 
     left: 0; 
     bottom: 0; 
     right: 0;
-}
-
-.container {
-    text-align: center;
-}
-
-.status-container {
-    border-bottom: none;
 }
 
 .status {
